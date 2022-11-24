@@ -90,13 +90,13 @@ int num_threads=40;
 std::string year=""; 
 std::string year_default="2016";
 std::string NameFileMCp0 = \
-"/gwpool/users/dini/FittoneNew3/DataMCreweighting-XGBV5_new/B0KstMuMu/reweight/Tree/final/XGBV5/2016/MC_JPSI_2016_preBDT_Nov21.root";
+"/eos/user/a/aboletti/BdToKstarMuMu/fileIndex/MC-Jpsi-presel-scaled/2016.root";
 std::string NameFileMCp1 = \
-"/gwpool/users/dini/FittoneNew3/DataMCreweighting-XGBV5_new/B0KstMuMu/reweight/Tree/final/XGBV5/2016/MC_JPSI_2016_preBDT_Nov21.root";
+"/eos/user/a/aboletti/BdToKstarMuMu/fileIndex/MC-Jpsi-presel-scaled/2016.root";
 std::string NameFileDatap0 = \
-"/gwpool/users/dini/FittoneNew3/DataMCreweighting-XGBV5_new/B0KstMuMu/reweight/Tree/final/XGBV5/2016/2016Data_passPreselection_passSPlotCuts_mergeSweights.root";
+"/eos/user/a/aboletti/BdToKstarMuMu/fileIndex/data-Jpsi-presel-forReweighting/2016.root";
 std::string NameFileDatap1 = \
-"/gwpool/users/dini/FittoneNew3/DataMCreweighting-XGBV5_new/B0KstMuMu/reweight/Tree/final/XGBV5/2016/2016Data_passPreselection_passSPlotCuts_mergeSweights.root";
+"/eos/user/a/aboletti/BdToKstarMuMu/fileIndex/data-Jpsi-presel-forReweighting/2016.root";
 std::string datasetYear;
 std::string dirfilexml;
 std::string datasetname = "dataset";
@@ -166,7 +166,6 @@ int main (int argc, char** argv) {
 
 
 
-//  TH1D* HxMassWn     = new TH1D( "HxMassWn"          , "B^{0} Mass sPlot <S0",100, 5., 5.6);
   
   TFile *fData = new TFile(NameFileDatap0.c_str(),"READ");
   TTree *TreeData     = (TTree*)fData->Get("ntuple");
