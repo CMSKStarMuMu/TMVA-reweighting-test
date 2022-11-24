@@ -455,10 +455,10 @@ int main (int argc, char** argv) {
    RatiosDataMC[i]->GetLowerRefGraph()->SetMarkerColor(kRed);
    RatiosDataMCW[i]->GetLowerRefGraph()->SetLineColor(kBlue);
    RatiosDataMCW[i]->GetLowerRefGraph()->SetMarkerColor(kBlue);
-   RatiosDataMC[i]->GetLowerRefGraph()->SetMinimum(-2);
-   RatiosDataMC[i]->GetLowerRefGraph()->SetMaximum( 0);
-   RatiosDataMCW[i]->GetLowerRefGraph()->SetMinimum(-2);
-   RatiosDataMCW[i]->GetLowerRefGraph()->SetMaximum( 0);
+   RatiosDataMC[i]->GetLowerRefGraph()->SetMinimum(0);
+   RatiosDataMC[i]->GetLowerRefGraph()->SetMaximum(2);
+   RatiosDataMCW[i]->GetLowerRefGraph()->SetMinimum(0);
+   RatiosDataMCW[i]->GetLowerRefGraph()->SetMaximum(2);
    RatiosDataMC[i]->GetLowerRefGraph()->Draw("same");
    cstudies[i]->Print( Form("%s/tmva-studies-%s-%s.pdf",datasetYear.c_str()  ,features[i].c_str(),year.c_str()));
 
