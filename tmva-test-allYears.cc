@@ -432,7 +432,7 @@ int main (int argc, char** argv) {
    HistMCW[i]->SetLineColor(kBlue);
    HistMCW[i]->SetMarkerColor(kBlue);
    HistMCW[i]->Draw("same,Hist");
-   RatiosDataMC.push_back(new TRatioPlot(HistData[i],HistMC[i],"diffsig"));
+   RatiosDataMC.push_back(new TRatioPlot(HistData[i],HistMC[i],"divsym"));
    RatiosDataMC[i]->SetGraphDrawOpt("L");
    RatiosDataMC[i]->SetSeparationMargin(0.0);
    RatiosDataMC[i]->SetH1DrawOpt("E1");
