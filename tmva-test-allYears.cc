@@ -105,10 +105,12 @@ std::string OutputFileName="TMVA_ClassificationOutput.root";
 std::vector<std::string> features = {"bVtxCL", "bLBS", "bLBSE" , "bDCABS","bDCABSE","kstTrk1Pt", "kstTrk2Pt",\
                                      "kstTrk1Eta", "kstTrk2Eta","kstTrk1DCABS","kstTrk1DCABSE",\
 				     "kstTrk2DCABS", "kstTrk2DCABSE","mu1Pt","mu2Pt","mu1Eta","mu2Eta","sum_isopt_04"};
-// std::vector<std::string> features = {"bVtxCL", "bLBS", "bLBSE" ,"bCosAlphaBS", "bDCABS","bDCABSE","kstTrk1Pt", "kstTrk2Pt",\
-//                                      "kstTrk1Eta", "kstTrk2Eta","kstTrk1DCABS","kstTrk1DCABSE",\
-// 				     "kstTrk2DCABS", "kstTrk2DCABSE","mu1Pt","mu2Pt","mu1Eta","mu2Eta","sum_isopt_04"};
-//std::vector<std::string> features = {"kstTrk1Pt", "kstTrk2Pt","kstTrk1Eta", "kstTrk2Eta"};
+/*
+std::vector<std::string> features = {"bVtxCL", "bLBS", "bLBSE" ,"bCosAlphaBS", "bDCABS","bDCABSE","kstTrk1Pt", "kstTrk2Pt",\
+				      "kstTrk1Eta", "kstTrk2Eta","kstTrk1DCABS","kstTrk1DCABSE",\
+				"kstTrk2DCABS", "kstTrk2DCABSE","mu1Pt","mu2Pt","mu1Eta","mu2Eta","sum_isopt_04"};
+std::vector<std::string> features = {"kstTrk1Pt", "kstTrk2Pt","kstTrk1Eta", "kstTrk2Eta"};
+*/
 std::vector<TH1D*> HistData;
 std::vector<TH1D*> HistMC;
 std::vector<TH1D*> HistMCW;
@@ -140,7 +142,7 @@ int main (int argc, char** argv) {
     std::cout<<Form("Setting year=%s",year.c_str())<<std::endl;
     std::cout<<Form("Setting dataset year=%s",datasetYear.c_str())<<std::endl;
     }else{
-     std::cout<<Form("not recognize year=",year.c_str())<<std::endl;
+     std::cout<<Form("not recognize year=%s",year.c_str())<<std::endl;
      exit(0);
     }
 	
@@ -206,7 +208,7 @@ int main (int argc, char** argv) {
 // loader->AddBackgroundTree( TreeMC  , backgroundWeight );
   loader->AddTree( TreeData,"Signal"	, signalWeight , mycuts   );
   loader->AddTree( TreeMC, "Background",backgroundWeight ,mycutb );
-  for (Int_t i=0;i<=features.size()-1;i++) { 
+  for (unsigned int i=0;i<=features.size()-1;i++) { 
    loader->AddVariable( features[i].c_str(), 'F' );
   }
   loader->SetSignalWeightExpression("nsig_sw");
@@ -264,11 +266,11 @@ int main (int argc, char** argv) {
 //    TMVA::Tools::Instance();
 //
    TMVA::Reader *reader = new TMVA::Reader( "!Color:!Silent" );
-   for (Int_t i=0;i<=features.size()-1;i++) { 
+   for (unsigned int i=0;i<=features.size()-1;i++) { 
     VarD.push_back(0);
     VarF.push_back(0);
    }
-   for (Int_t i=0;i<=features.size()-1;i++) { 
+   for (unsigned int i=0;i<=features.size()-1;i++) { 
     reader->AddVariable( features[i].c_str(), &VarF[i]);
     cstudies.push_back(new TCanvas(Form("c_%s",features[i].c_str()),Form("MC %s reweighting studies %s",features[i].c_str(),year.c_str()),200,10,900,780));
    }
@@ -287,7 +289,7 @@ int main (int argc, char** argv) {
    TFile *fMC   = new TFile(NameFileMCp1.c_str(),"READ");
    std::cout<<Form("Opening MC File :%s \n",NameFileMCp1.c_str())<<std::endl;
    TTree *TreeMC     = (TTree*)fMC->Get("ntuple");
-   for (Int_t i=0;i<=features.size()-1;i++) { 
+   for (unsigned int i=0;i<=features.size()-1;i++) { 
      TreeMC->SetBranchAddress(features[i].c_str()     ,&VarD[i] );
      float hMin = TreeMC->GetMinimum(features[i].c_str());
      float hMax = TreeMC->GetMaximum(features[i].c_str());
@@ -316,7 +318,7 @@ int main (int argc, char** argv) {
      if(features[i]=="kstTrk2DCABSE") hMax= 0.025;
      HistData.push_back(new TH1D(  Form("Hx%s_Data" ,features[i].c_str()), Form("%s Data %s"	        ,features[i].c_str(),year.c_str()),100,hMin,hMax));
      HistMC.push_back(  new TH1D(  Form("Hx%s_MC"   ,features[i].c_str()), Form("%s MC %s" 	        ,features[i].c_str(),year.c_str()),100,hMin,hMax));
-     HistMCW.push_back( new TH1D(  Form("Hx%s_MCW"  ,features[i].c_str()), Form("%s MC %s %s Reweighted",features[i].c_str(),year.c_str()),100,hMin,hMax));
+     HistMCW.push_back( new TH1D(  Form("Hx%s_MCW"  ,features[i].c_str()), Form("%s MC %s Reweighted",features[i].c_str(),year.c_str()),100,hMin,hMax));
    }
 //   fMC->cd();
    TreeMC->SetBranchAddress("pass_preselection"     ,&pass_preselection );
@@ -329,7 +331,6 @@ int main (int argc, char** argv) {
    TreeMC->SetBranchAddress("truthMatchTrkp"	    ,&truthMatchTrkp );
    TreeMC->SetBranchAddress("trig"	            ,&trig );
    TreeMC->SetBranchAddress("weight"	            ,&weight );
-   float val_mva=0;
    float val_mva_S=0;
    float val_mva_B=0;
    float rewe=0;
@@ -349,7 +350,7 @@ int main (int argc, char** argv) {
        if(truthMatchTrkm!=1) continue; 
        if(truthMatchTrkp!=1) continue;
        if(fabs(mumuMass - JPsiMass) < nSigma_psiRej*mumuMassE){
-        for (Int_t i=0;i<=features.size()-1;i++) { 
+        for (unsigned int i=0;i<=features.size()-1;i++) { 
  	 if(TMath::IsNaN(VarD[i])) continue;
          VarF[i]=float(VarD[i]);
         }
@@ -359,7 +360,7 @@ int main (int argc, char** argv) {
  	rewe=val_mva_S/val_mva_B;
  	HxBDTMC ->Fill(val_mva_S);
  	HxBDTMCW->Fill(val_mva_S,rewe);
- 	for (Int_t i=0;i<=features.size()-1;i++) {
+ 	for (unsigned int i=0;i<=features.size()-1;i++) {
  	 HistMC[i] ->Fill(VarD[i],weight);
  	 HistMCW[i]->Fill(VarD[i],rewe*weight);
  	}
@@ -370,7 +371,7 @@ int main (int argc, char** argv) {
     std::cout<<Form("Opening Data File :%s \n",NameFileDatap1.c_str())<<std::endl;
 //    fData->cd();
     TTree *TreeData     = (TTree*)fData->Get("ntuple");
-    for (Int_t i=0;i<=features.size()-1;i++) { 
+    for (unsigned int i=0;i<=features.size()-1;i++) { 
      TreeData->SetBranchAddress(features[i].c_str()     ,&VarD[i] );
     }
     TreeData->SetBranchAddress("pass_preselection" ,&pass_preselection );
@@ -390,13 +391,13 @@ int main (int argc, char** argv) {
 	   if( int(eventN)%2==0 ) continue; // parity!!!!!!!!!!!!!!!!!!!!!!111
     	   if(pass_preselection!=1) continue;
     	   if(fabs(mumuMass - JPsiMass) < nSigma_psiRej*mumuMassE){
- 	    for (Int_t i=0;i<=features.size()-1;i++) {
+ 	    for (unsigned int i=0;i<=features.size()-1;i++) {
  	     if(TMath::IsNaN(VarD[i])) continue;
  	     VarF[i]=float(VarD[i]);
  	    }
  	    val_mva_S = reader->EvaluateMulticlass( "BDT"    )[0];
     	    HxBDTData->Fill(val_mva_S,nsig_sw);
- 	    for (Int_t i=0;i<=features.size()-1;i++) {
+ 	    for (unsigned int i=0;i<=features.size()-1;i++) {
  	     HistData[i]->Fill(VarD[i],nsig_sw);
  	    }
      	   }
@@ -417,7 +418,7 @@ int main (int argc, char** argv) {
  HxBDTMCW->SetMarkerColor(kBlue);
  HxBDTMCW->Draw("same,Hist");
  c_bdt->Print(Form("%s/tmva-bdt-score-%s.pdf",datasetYear.c_str(),year.c_str()));
- for (Int_t i=0;i<=features.size()-1;i++) {
+ for (unsigned int i=0;i<=features.size()-1;i++) {
    cstudies[i]->cd();
    HistData[i]->Sumw2();
    HistMC[i]->Sumw2();
