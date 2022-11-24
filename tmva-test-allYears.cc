@@ -91,20 +91,12 @@ std::string year="";
 std::string year_default="2016";
 std::string NameFileMCp0 = \
 "/gwpool/users/dini/FittoneNew3/DataMCreweighting-XGBV5_new/B0KstMuMu/reweight/Tree/final/XGBV5/2016/MC_JPSI_2016_preBDT_Nov21.root";
-//"/gwpool/users/dini/FittoneNew3/DataMCreweighting-XGBV5_new/B0KstMuMu/reweight/Tree/final/XGBV5/2016/MC_JPSI_2016_preBDT_scale_add_vars_median_no_mass_window.root";
-//"/gwpool/users/dini/FittoneNew3/DataMCreweighting-XGBV5_new/B0KstMuMu/reweight/Tree/final/XGBV5/2016/2016_MC_JPSI_scale_and_preselection_forreweighting_p0.root";
 std::string NameFileMCp1 = \
 "/gwpool/users/dini/FittoneNew3/DataMCreweighting-XGBV5_new/B0KstMuMu/reweight/Tree/final/XGBV5/2016/MC_JPSI_2016_preBDT_Nov21.root";
-//"/gwpool/users/dini/FittoneNew3/DataMCreweighting-XGBV5_new/B0KstMuMu/reweight/Tree/final/XGBV5/2016/MC_JPSI_2016_preBDT_scale_add_vars_median_no_mass_window.root";
-//"/gwpool/users/dini/FittoneNew3/DataMCreweighting-XGBV5_new/B0KstMuMu/reweight/Tree/final/XGBV5/2016/2016_MC_JPSI_scale_and_preselection_forreweighting_p1.root";
 std::string NameFileDatap0 = \
-//"/gwpool/users/dini/FittoneNew3/DataMCreweighting-XGBV5_new/B0KstMuMu/reweight/Tree/final/XGBV5/2016/2016_data_beforsel.root";
 "/gwpool/users/dini/FittoneNew3/DataMCreweighting-XGBV5_new/B0KstMuMu/reweight/Tree/final/XGBV5/2016/2016Data_passPreselection_passSPlotCuts_mergeSweights.root";
-//"/gwpool/users/dini/FittoneNew3/DataMCreweighting-XGBV5_new/B0KstMuMu/reweight/Tree/final/XGBV5/2016/2016_data_aftersel_p0.root";
 std::string NameFileDatap1 = \
 "/gwpool/users/dini/FittoneNew3/DataMCreweighting-XGBV5_new/B0KstMuMu/reweight/Tree/final/XGBV5/2016/2016Data_passPreselection_passSPlotCuts_mergeSweights.root";
-//"/gwpool/users/dini/FittoneNew3/DataMCreweighting-XGBV5_new/B0KstMuMu/reweight/Tree/final/XGBV5/2016/2016_data_beforsel.root";
-//"/gwpool/users/dini/FittoneNew3/DataMCreweighting-XGBV5_new/B0KstMuMu/reweight/Tree/final/XGBV5/2016/2016_data_aftersel_p1.root";
 std::string datasetYear;
 std::string dirfilexml;
 std::string datasetname = "dataset";
@@ -217,18 +209,6 @@ int main (int argc, char** argv) {
   for (Int_t i=0;i<=features.size()-1;i++) { 
    loader->AddVariable( features[i].c_str(), 'F' );
   }
-//   
-//   loader->AddVariable( "kstTrk1Pt", 'D' );
-//   loader->AddVariable( "kstTrk2Pt", 'D' );
-//   loader->AddVariable( "kstTrk1Eta", 'D' );
-//   loader->AddVariable( "kstTrk2Eta", 'D' );
-  
-//   loader->AddVariable( "kstTrk1Pt", 'F' );
-//   loader->AddVariable( "kstTrk2Pt", 'F' );
-//   loader->AddVariable( "kstTrk1Eta", 'F' );
-//   loader->AddVariable( "kstTrk2Eta", 'F' );
-//   loader->AddSpectator( "truthMatchMum",  'F' );
-//   loader->AddSpectator( "truthMatchMup",  'F' );
   loader->SetSignalWeightExpression("nsig_sw");
   loader->SetBackgroundWeightExpression("weight");
 //  loader->AddVariable( "nsig_sw", 'D' );
@@ -334,8 +314,6 @@ int main (int argc, char** argv) {
      if(features[i]=="kstTrk1DCABSE") hMax= 0.025;
      if(features[i]=="kstTrk2DCABSE") hMin= 0.;
      if(features[i]=="kstTrk2DCABSE") hMax= 0.025;
-//   float hMin = 0;
-//   float hMax = 35;
      HistData.push_back(new TH1D(  Form("Hx%s_Data" ,features[i].c_str()), Form("%s Data %s"	        ,features[i].c_str(),year.c_str()),100,hMin,hMax));
      HistMC.push_back(  new TH1D(  Form("Hx%s_MC"   ,features[i].c_str()), Form("%s MC %s" 	        ,features[i].c_str(),year.c_str()),100,hMin,hMax));
      HistMCW.push_back( new TH1D(  Form("Hx%s_MCW"  ,features[i].c_str()), Form("%s MC %s %s Reweighted",features[i].c_str(),year.c_str()),100,hMin,hMax));
@@ -460,40 +438,24 @@ int main (int argc, char** argv) {
    RatiosDataMC[i]->SetH1DrawOpt("E1");
    RatiosDataMC[i]->SetH2DrawOpt("HIST");
    RatiosDataMC[i]->Draw();
-//    RatiosDataMC[i]->GetLowerRefGraph()->SetMinimum(RatiosDataMC[i]->GetLowerRefGraph()->GetMinimum()*2.);
-//    RatiosDataMC[i]->GetLowerRefGraph()->SetMaximum(RatiosDataMC[i]->GetLowerRefGraph()->GetMaximum()*2.);
-//   TGraph *g = RatiosDataMC[i]->GetLowerRefGraph();
    RatiosDataMCW.push_back(new TRatioPlot(HistData[i],HistMCW[i],"divsym"));
    RatiosDataMCW[i]->SetGraphDrawOpt("L");
    RatiosDataMCW[i]->SetSeparationMargin(0.0);
    RatiosDataMCW[i]->SetH1DrawOpt("E1");
    RatiosDataMCW[i]->SetH2DrawOpt("HIST");
-//   RatiosDataMCW[i]->Draw("same");
-//   RatiosDataMCW[i]->GetLowerRefGraph()->
    RatiosDataMCW[i]->Draw();
    RatiosDataMCW[i]->GetLowerRefGraph()->SetLineColor(kBlue);
    RatiosDataMCW[i]->GetLowerRefGraph()->SetMarkerColor(kBlue);
    RatiosDataMCW[i]->GetUpperPad()->cd();
    HistMC[i]->SetLineColor(kRed);
    HistMC[i]->SetMarkerColor(kRed);
-//    HistMCW[i]->SetLineColor(kBlue);
-//    HistMCW[i]->SetMarkerColor(kBlue);
-//    HistData[i]->Draw("same");
    HistMC[i]->Draw("same,Hist");
    RatiosDataMCW[i]->GetLowerPad()->cd();
    RatiosDataMC[i]->GetLowerRefGraph()->SetLineColor(kRed);
    RatiosDataMC[i]->GetLowerRefGraph()->SetMarkerColor(kRed);
    RatiosDataMCW[i]->GetLowerRefGraph()->SetLineColor(kBlue);
    RatiosDataMCW[i]->GetLowerRefGraph()->SetMarkerColor(kBlue);
-//    RatiosDataMC[i]->GetLowerRefGraph()->SetMinimum(RatiosDataMC[i]->GetLowerRefGraph()->GetMinimum()*1.4);
-//    RatiosDataMC[i]->GetLowerRefGraph()->SetMaximum(RatiosDataMC[i]->GetLowerRefGraph()->GetMaximum()*1.4);
-//    RatiosDataMCW[i]->GetLowerRefGraph()->SetMinimum(RatiosDataMC[i]->GetLowerRefGraph()->GetMinimum()*1.4);
-//    RatiosDataMCW[i]->GetLowerRefGraph()->SetMaximum(RatiosDataMC[i]->GetLowerRefGraph()->GetMaximum()*1.4);
    RatiosDataMC[i]->GetLowerRefGraph()->Draw("same");
-//   RatiosDataMCW[i]->GetLowerPad()->cd();
-//   g->Draw();
-//   HistMCW[i]->Draw("same,Hist");
-//   cstudies[i]->Update();
    cstudies[i]->Print( Form("%s/tmva-studies-%s-%s.pdf",datasetYear.c_str()  ,features[i].c_str(),year.c_str()));
 
  }
