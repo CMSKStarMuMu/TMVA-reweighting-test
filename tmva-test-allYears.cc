@@ -91,22 +91,22 @@ std::string isFeature="";
 std::string year=""; 
 std::string year_default="2016";
 std::string NameFileMCp0 = \
-"/gwpool/users/dini/p5prime/ntuples/after_nominal_selection/2016MC_JPSI_noIP2D_addxcutvariable.root";
+"/eos/cms/store/group/phys_bphys/fiorendi/p5prime/ntuples/after_nominal_selection/2016MC_JPSI_noIP2D_addxcutvariable.root";
 //"/gwpool/users/dini/FittoneNew3/DataMCreweighting-XGBV5_new/B0KstMuMu/reweight/Tree/final/XGBV5/2016/MC_JPSI_2016_preBDT_Nov21.root";
 //"/gwpool/users/dini/FittoneNew3/DataMCreweighting-XGBV5_new/B0KstMuMu/reweight/Tree/final/XGBV5/2016/MC_JPSI_2016_preBDT_scale_add_vars_median_no_mass_window.root";
 //"/gwpool/users/dini/FittoneNew3/DataMCreweighting-XGBV5_new/B0KstMuMu/reweight/Tree/final/XGBV5/2016/2016_MC_JPSI_scale_and_preselection_forreweighting_p0.root";
 std::string NameFileMCp1 = \
-"/gwpool/users/dini/p5prime/ntuples/after_nominal_selection/2016MC_JPSI_noIP2D_addxcutvariable.root";
+"/eos/cms/store/group/phys_bphys/fiorendi/p5prime/ntuples/after_nominal_selection/2016MC_JPSI_noIP2D_addxcutvariable.root";
 //"/gwpool/users/dini/FittoneNew3/DataMCreweighting-XGBV5_new/B0KstMuMu/reweight/Tree/final/XGBV5/2016/MC_JPSI_2016_preBDT_Nov21.root";
 //"/gwpool/users/dini/FittoneNew3/DataMCreweighting-XGBV5_new/B0KstMuMu/reweight/Tree/final/XGBV5/2016/MC_JPSI_2016_preBDT_scale_add_vars_median_no_mass_window.root";
 //"/gwpool/users/dini/FittoneNew3/DataMCreweighting-XGBV5_new/B0KstMuMu/reweight/Tree/final/XGBV5/2016/2016_MC_JPSI_scale_and_preselection_forreweighting_p1.root";
 std::string NameFileDatap0 = \
-"/gwpool/users/dini/p5prime/ntuples/after_nominal_selection/jpsi_channel_splot/2016data_noIP2D_addxcutvariable_passSPlotCuts_mergeSweights.root";
+"/eos/cms/store/group/phys_bphys/fiorendi/p5prime/ntuples/after_nominal_selection/jpsi_channel_splot/2016data_noIP2D_addxcutvariable_passSPlotCuts_mergeSweights.root";
 //"/gwpool/users/dini/FittoneNew3/DataMCreweighting-XGBV5_new/B0KstMuMu/reweight/Tree/final/XGBV5/2016/2016_data_beforsel.root";
 //"/gwpool/users/dini/FittoneNew3/DataMCreweighting-XGBV5_new/B0KstMuMu/reweight/Tree/final/XGBV5/2016/2016Data_passPreselection_passSPlotCuts_mergeSweights.root";
 //"/gwpool/users/dini/FittoneNew3/DataMCreweighting-XGBV5_new/B0KstMuMu/reweight/Tree/final/XGBV5/2016/2016_data_aftersel_p0.root";
 std::string NameFileDatap1 = \
-"/gwpool/users/dini/p5prime/ntuples/after_nominal_selection/jpsi_channel_splot/2016data_noIP2D_addxcutvariable_passSPlotCuts_mergeSweights.root";
+"/eos/cms/store/group/phys_bphys/fiorendi/p5prime/ntuples/after_nominal_selection/jpsi_channel_splot/2016data_noIP2D_addxcutvariable_passSPlotCuts_mergeSweights.root";
 //"/gwpool/users/dini/FittoneNew3/DataMCreweighting-XGBV5_new/B0KstMuMu/reweight/Tree/final/XGBV5/2016/2016Data_passPreselection_passSPlotCuts_mergeSweights.root";
 //"/gwpool/users/dini/FittoneNew3/DataMCreweighting-XGBV5_new/B0KstMuMu/reweight/Tree/final/XGBV5/2016/2016_data_beforsel.root";
 //"/gwpool/users/dini/FittoneNew3/DataMCreweighting-XGBV5_new/B0KstMuMu/reweight/Tree/final/XGBV5/2016/2016_data_aftersel_p1.root";
