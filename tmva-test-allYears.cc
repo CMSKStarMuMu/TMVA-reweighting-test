@@ -73,7 +73,7 @@ double kstTrk1Pt;
 double kstTrk2Pt;
 double kstTrk1Eta;
 double kstTrk2Eta;
-double weight=-99;
+Float_t weight=-99;
 
 double kstTrk1PtD=-99;
 double kstTrk2PtD=-99;
@@ -84,33 +84,59 @@ Double_t truthMatchMup=-99 ;
 Double_t truthMatchTrkm =-99;
 Double_t truthMatchTrkp=-99 ;
 Double_t trig=-99 ;
-Double_t eventN=-99;
+Long64_t eventN=-99;
 int pass_preselection=-99;
 int num_threads=40;
+std::string isFeature="";
 std::string year=""; 
 std::string year_default="2016";
 std::string NameFileMCp0 = \
-"/eos/user/a/aboletti/BdToKstarMuMu/fileIndex/MC-Jpsi-presel-scaled/2016.root";
+"/gwpool/users/dini/p5prime/ntuples/after_nominal_selection/2016MC_JPSI_noIP2D_addxcutvariable.root";
+//"/gwpool/users/dini/FittoneNew3/DataMCreweighting-XGBV5_new/B0KstMuMu/reweight/Tree/final/XGBV5/2016/MC_JPSI_2016_preBDT_Nov21.root";
+//"/gwpool/users/dini/FittoneNew3/DataMCreweighting-XGBV5_new/B0KstMuMu/reweight/Tree/final/XGBV5/2016/MC_JPSI_2016_preBDT_scale_add_vars_median_no_mass_window.root";
+//"/gwpool/users/dini/FittoneNew3/DataMCreweighting-XGBV5_new/B0KstMuMu/reweight/Tree/final/XGBV5/2016/2016_MC_JPSI_scale_and_preselection_forreweighting_p0.root";
 std::string NameFileMCp1 = \
-"/eos/user/a/aboletti/BdToKstarMuMu/fileIndex/MC-Jpsi-presel-scaled/2016.root";
+"/gwpool/users/dini/p5prime/ntuples/after_nominal_selection/2016MC_JPSI_noIP2D_addxcutvariable.root";
+//"/gwpool/users/dini/FittoneNew3/DataMCreweighting-XGBV5_new/B0KstMuMu/reweight/Tree/final/XGBV5/2016/MC_JPSI_2016_preBDT_Nov21.root";
+//"/gwpool/users/dini/FittoneNew3/DataMCreweighting-XGBV5_new/B0KstMuMu/reweight/Tree/final/XGBV5/2016/MC_JPSI_2016_preBDT_scale_add_vars_median_no_mass_window.root";
+//"/gwpool/users/dini/FittoneNew3/DataMCreweighting-XGBV5_new/B0KstMuMu/reweight/Tree/final/XGBV5/2016/2016_MC_JPSI_scale_and_preselection_forreweighting_p1.root";
 std::string NameFileDatap0 = \
-"/eos/user/a/aboletti/BdToKstarMuMu/fileIndex/data-Jpsi-presel-forReweighting/2016.root";
+"/gwpool/users/dini/p5prime/ntuples/after_nominal_selection/jpsi_channel_splot/2016data_noIP2D_addxcutvariable_passSPlotCuts_mergeSweights.root";
+//"/gwpool/users/dini/FittoneNew3/DataMCreweighting-XGBV5_new/B0KstMuMu/reweight/Tree/final/XGBV5/2016/2016_data_beforsel.root";
+//"/gwpool/users/dini/FittoneNew3/DataMCreweighting-XGBV5_new/B0KstMuMu/reweight/Tree/final/XGBV5/2016/2016Data_passPreselection_passSPlotCuts_mergeSweights.root";
+//"/gwpool/users/dini/FittoneNew3/DataMCreweighting-XGBV5_new/B0KstMuMu/reweight/Tree/final/XGBV5/2016/2016_data_aftersel_p0.root";
 std::string NameFileDatap1 = \
-"/eos/user/a/aboletti/BdToKstarMuMu/fileIndex/data-Jpsi-presel-forReweighting/2016.root";
+"/gwpool/users/dini/p5prime/ntuples/after_nominal_selection/jpsi_channel_splot/2016data_noIP2D_addxcutvariable_passSPlotCuts_mergeSweights.root";
+//"/gwpool/users/dini/FittoneNew3/DataMCreweighting-XGBV5_new/B0KstMuMu/reweight/Tree/final/XGBV5/2016/2016Data_passPreselection_passSPlotCuts_mergeSweights.root";
+//"/gwpool/users/dini/FittoneNew3/DataMCreweighting-XGBV5_new/B0KstMuMu/reweight/Tree/final/XGBV5/2016/2016_data_beforsel.root";
+//"/gwpool/users/dini/FittoneNew3/DataMCreweighting-XGBV5_new/B0KstMuMu/reweight/Tree/final/XGBV5/2016/2016_data_aftersel_p1.root";
 std::string datasetYear;
 std::string dirfilexml;
 std::string datasetname = "dataset";
 std::string filexml= "/weights/TMVAClassification_BDT.weights.xml";
 std::string OutputFileName="TMVA_ClassificationOutput.root";
-std::vector<std::string> features = {"bVtxCL", "bLBS", "bLBSE" , "bDCABS","bDCABSE","kstTrk1Pt", "kstTrk2Pt",\
-                                     "kstTrk1Eta", "kstTrk2Eta","kstTrk1DCABS","kstTrk1DCABSE",\
-				     "kstTrk2DCABS", "kstTrk2DCABSE","mu1Pt","mu2Pt","mu1Eta","mu2Eta","sum_isopt_04"};
-/*
-std::vector<std::string> features = {"bVtxCL", "bLBS", "bLBSE" ,"bCosAlphaBS", "bDCABS","bDCABSE","kstTrk1Pt", "kstTrk2Pt",\
-				      "kstTrk1Eta", "kstTrk2Eta","kstTrk1DCABS","kstTrk1DCABSE",\
-				"kstTrk2DCABS", "kstTrk2DCABSE","mu1Pt","mu2Pt","mu1Eta","mu2Eta","sum_isopt_04"};
-std::vector<std::string> features = {"kstTrk1Pt", "kstTrk2Pt","kstTrk1Eta", "kstTrk2Eta"};
-*/
+/* //d::vector<std::string> features = {"bVtxCL", "bLBS", "bLBSE" , "bDCABS","bDCABSE","kstTrk1Pt", "kstTrk2Pt",\
+//                                   "kstTrk1Eta", "kstTrk2Eta","kstTrk1DCABS","kstTrk1DCABSE",\
+//				     "kstTrk2DCABS", "kstTrk2DCABSE","mu1Pt","mu2Pt","mu1Eta","mu2Eta","sum_isopt_04"};
+ */ 
+/*    std::vector<std::string> features = {"bVtxCL", "bLBS", "bLBSE" ,"bCosAlphaBS", "bDCABS","bDCABSE","kstTrk1Pt", "kstTrk2Pt",\
+                                        "kstTrk1Eta", "kstTrk2Eta","kstTrk1DCABS","kstTrk1DCABSE",\
+   				     "kstTrk2DCABS", "kstTrk2DCABSE","mu1Pt","mu2Pt","mu1Eta","mu2Eta","sum_isopt_04"};
+ */   
+std::vector<std::string> variables = {};
+std::vector<std::string> vartested = {"cos_theta_l","cos_theta_k","phi_kst_mumu"};
+   
+
+std::vector<std::string> features = {"kstTrk1Pt", "kstTrk2Pt",\
+                                           "kstTrk1Eta", "kstTrk2Eta",\
+   				           "mu1Pt","mu2Pt","mu1Eta","mu2Eta"};
+/* std::vector<std::string> features = {"bVtxCL","bLBS",  "bCosAlphaBS", "bDCABS","kstTrk1Pt", "kstTrk2Pt",\
+                                        "kstTrk1Eta", "kstTrk2Eta","kstTrk1DCABS","kstTrk1DCABSE",\
+   				     "kstTrk2DCABS", "kstTrk2DCABSE","mu1Pt","mu2Pt","mu1Eta","mu2Eta","sum_isopt_04"};
+ */
+ //  std::vector<std::string> features = {"kstTrk1Pt", "kstTrk2Pt","kstTrk1Eta", "kstTrk2Eta"};
+//  std::vector<std::string> features = {"kstTrk1Pt", "kstTrk2Pt","kstTrk1Eta", "kstTrk2Eta","bCosAlphaBS"};
+std::vector<TCut> RemoveNone;
 std::vector<TH1D*> HistData;
 std::vector<TH1D*> HistMC;
 std::vector<TH1D*> HistMCW;
@@ -166,6 +192,7 @@ int main (int argc, char** argv) {
 
 
 
+//  TH1D* HxMassWn     = new TH1D( "HxMassWn"          , "B^{0} Mass sPlot <S0",100, 5., 5.6);
   
   TFile *fData = new TFile(NameFileDatap0.c_str(),"READ");
   TTree *TreeData     = (TTree*)fData->Get("ntuple");
@@ -186,7 +213,10 @@ int main (int argc, char** argv) {
   auto outputFile = TFile::Open(Form("%s/%s",datasetYear.c_str(),OutputFileName.c_str()), "RECREATE");
 
 //  TMVA::Factory factory("TMVAClassification", outputFile,"!V:ROC:!Silent:Color:!DrawProgressBar:AnalysisType=Classification" ); 
-  TMVA::Factory factory =  TMVA::Factory( "TMVAClassification", outputFile,"!V:!Silent:Color:DrawProgressBar:Transformations=I;D;P;G,D:AnalysisType=multiclass" );
+//  TMVA::Factory factory =  TMVA::Factory( "TMVAClassification", outputFile,"!V:!Silent:Color:DrawProgressBar:Transformations=None:AnalysisType=multiclass" );
+//TMVA::Factory factory =  TMVA::Factory( "TMVAClassification", outputFile,"!V:!Silent:Color:DrawProgressBar:Transformations=I;P;G:AnalysisType=multiclass" );
+    TMVA::Factory factory =  TMVA::Factory( "TMVAClassification", outputFile,"!V:!Silent:Color:DrawProgressBar:Transformations=None:AnalysisType=multiclass" );
+//    TMVA::Factory factory =  TMVA::Factory( "TMVAClassification", outputFile,"!V:!Silent:Color:DrawProgressBar:Transformations=I;D;P;G,D:AnalysisType=multiclass" );
 //  TMVA::Factory factory =  TMVA::Factory( "TMVAMulticlass", outputFile,"!V:!Silent:Color:DrawProgressBar:Transformations=I;D;P;G,D:AnalysisType=multiclass" );
 //  TMVA::Factory factory("TMVAClassification", outputFile,"!V:ROC:!Silent:Color:!DrawProgressBar:AnalysisType=Classification" ); 
   TMVA::DataLoader * loader = new TMVA::DataLoader(datasetYear.c_str());
@@ -196,20 +226,47 @@ int main (int argc, char** argv) {
   Double_t backgroundWeight = 1.0;
    
 // You can add an arbitrary number of signal or background trees
-  TCut mycuts  = "pass_preselection==1&& abs(mumuMass - 3.096916) < 3*mumuMassE && eventN%2==0&&!TMath::IsNaN(bDCABSE)&&!TMath::IsNaN(bLBSE)&&abs(bCosAlphaBS)<=1&&sum_isopt_04<10"; // for example: TCut mycuts = "abs(var1)<0.5 && abs(var2-0.5)<1";
+  TCut mycuts0  = "pass_preselection==1&& fabs(mumuMass - 3.096916) < 3*(mumuMassE) && int(eventN)%2==0"; // for example: TCut mycuts = "abs(var1)<0.5 && abs(var2-0.5)<1";
+//  TCut mycuts0  = "pass_preselection==1&& fabs(mumuMass - 3.096916) < 3*(mumuMassE) && int(eventN)%2==0&&fabs(bCosAlphaBS)<=1&&(sum_isopt_04)<10"; // for example: TCut mycuts = "abs(var1)<0.5 && abs(var2-0.5)<1";
+//  TCut mycuts0  = "pass_preselection==1&& abs(mumuMass - 3.096916) < 3*mumuMassE && int(eventN)%2==0&&abs(bCosAlphaBS)<=1&&sum_isopt_04<10"; // for example: TCut mycuts = "abs(var1)<0.5 && abs(var2-0.5)<1";
 //  TCut mycuts  = "pass_preselection==1&& abs(mumuMass - 3.096916) < 3*mumuMassE &&!TMath::IsNaN(bDCABSE)&&!TMath::IsNaN(bLBSE)"; // for example: TCut mycuts = "abs(var1)<0.5 && abs(var2-0.5)<1";
 //   TCut mycutb1 = "pass_preselection==1&& abs(mumuMass - 3.096916) < 3*mumuMassE && (trig==1)";
 //   TCut mycutb2 = "(truthMatchMum==1)&&(truthMatchMup==1) && truthMatchTrkm==1 && truthMatchTrkp==1"; // for example: TCut mycutb = "abs(var1)<0.5";
 //   TCut mycutb=mycutb1&&mycutb2;
-  TCut mycutb="pass_preselection==1&& abs(mumuMass - 3.096916) < 3*mumuMassE && eventN%2==0 && (trig==1)&&(truthMatchMum==1)&&(truthMatchMup==1) && truthMatchTrkm==1 && truthMatchTrkp==1&&!TMath::IsNaN(bDCABSE)&&!TMath::IsNaN(bLBSE)&&abs(bCosAlphaBS)<=1&&sum_isopt_04<10";
+  TCut mycutb0="pass_preselection==1&& fabs(mumuMass - 3.096916) < 3*(mumuMassE) && int(eventN%2)==0 &&(trig==1) && (truthMatchMum==1) && (truthMatchMup==1) && (truthMatchTrkm==1) && (truthMatchTrkp==1)";
 //  TCut mycutb="pass_preselection==1&& abs(mumuMass - 3.096916) < 3*mumuMassE && (trig==1)&&(truthMatchMum==1)&&(truthMatchMup==1) && truthMatchTrkm==1 && truthMatchTrkp==1&&!TMath::IsNaN(bDCABSE)&&!TMath::IsNaN(bLBSE)";
 // loader->AddSignalTree    ( TreeData,     signalWeight );
 // loader->AddBackgroundTree( TreeMC  , backgroundWeight );
+  TCut RMNone="";
+  for (unsigned int i=0;i<=features.size()-1;i++) {
+   RemoveNone.push_back(TCut(Form("!TMath::IsNaN(%s)",features[i].c_str())));
+   if(i==0) RMNone=RemoveNone[i];
+   if(i>0)  RMNone=RMNone&&RemoveNone[i];
+  }
+//  TCut mycutNEve="int(eventN)<2000000";
+//   TCut mycuts=mycuts0&&RMNone&&mycutNEve;
+//   TCut mycutb=mycutb0&&RMNone&&mycutNEve;
+  TCut mycuts=mycuts0&&RMNone;
+  TCut mycutb=mycutb0&&RMNone;
+  std::cout<<Form("Cuts [Data] = %s \n", mycuts.GetTitle ())<<std::endl;
+  std::cout<<Form("Cuts [MC]   = %s \n", mycutb.GetTitle ())<<std::endl;
   loader->AddTree( TreeData,"Signal"	, signalWeight , mycuts   );
   loader->AddTree( TreeMC, "Background",backgroundWeight ,mycutb );
-  for (unsigned int i=0;i<=features.size()-1;i++) { 
+  for (unsigned int i=0;i<=features.size()-1;i++) {
    loader->AddVariable( features[i].c_str(), 'F' );
   }
+//   
+//   loader->AddVariable( "kstTrk1Pt", 'D' );
+//   loader->AddVariable( "kstTrk2Pt", 'D' );
+//   loader->AddVariable( "kstTrk1Eta", 'D' );
+//   loader->AddVariable( "kstTrk2Eta", 'D' );
+  
+//   loader->AddVariable( "kstTrk1Pt", 'F' );
+//   loader->AddVariable( "kstTrk2Pt", 'F' );
+//   loader->AddVariable( "kstTrk1Eta", 'F' );
+//   loader->AddVariable( "kstTrk2Eta", 'F' );
+//   loader->AddSpectator( "truthMatchMum",  'F' );
+//   loader->AddSpectator( "truthMatchMup",  'F' );
   loader->SetSignalWeightExpression("nsig_sw");
   loader->SetBackgroundWeightExpression("weight");
 //  loader->AddVariable( "nsig_sw", 'D' );
@@ -222,7 +279,13 @@ int main (int argc, char** argv) {
 // To also specify the number of testing events, use:
 //    loader->PrepareTrainingAndTestTree( mycut,
 //                                         "NSigTrain=3000:NBkgTrain=3000:NSigTest=3000:NBkgTest=3000:SplitMode=Random:!V" );
-   loader->PrepareTrainingAndTestTree( "", "",
+//   loader->PrepareTrainingAndTestTree( "", "",
+//   loader->PrepareTrainingAndTestTree( mycuts, mycutb,
+//                                  "nTrain_Signal=5000:nTrain_Background=5000:SplitMode=Random:NormMode=NumEvents:!V" );
+//                                    "nTrain_Signal=500000:nTrain_Background=500000:SplitMode=Random:NormMode=NumEvents:!V" );
+//                                      "SplitMode=Random:NormMode=NumEvents:!V" );
+   loader->PrepareTrainingAndTestTree( "","",
+//   loader->PrepareTrainingAndTestTree( mycuts, mycuts,
 //   loader->PrepareTrainingAndTestTree( mycuts, mycutb,
 //                                  "nTrain_Signal=5000:nTrain_Background=5000:SplitMode=Random:NormMode=NumEvents:!V" );
 //                                    "nTrain_Signal=500000:nTrain_Background=500000:SplitMode=Random:NormMode=NumEvents:!V" );
@@ -268,10 +331,18 @@ int main (int argc, char** argv) {
    for (unsigned int i=0;i<=features.size()-1;i++) { 
     VarD.push_back(0);
     VarF.push_back(0);
+    variables.push_back(features[i]);
+    cstudies.push_back(new TCanvas(Form("c_%s",features[i].c_str()),Form("MC %s reweighting studies %s (BDT feature)",features[i].c_str(),year.c_str()),200,10,900,780));
    }
+   for (unsigned int i=0;i<=vartested.size()-1;i++) { 
+    VarD.push_back(0);
+    variables.push_back(vartested[i]);
+    cstudies.push_back(new TCanvas(Form("c_%s",vartested[i].c_str()),Form("MC %s reweighting studies %s (variable check)",vartested[i].c_str(),year.c_str()),200,10,900,780));
+   }
+   
    for (unsigned int i=0;i<=features.size()-1;i++) { 
     reader->AddVariable( features[i].c_str(), &VarF[i]);
-    cstudies.push_back(new TCanvas(Form("c_%s",features[i].c_str()),Form("MC %s reweighting studies %s",features[i].c_str(),year.c_str()),200,10,900,780));
+//    cstudies.push_back(new TCanvas(Form("c_%s",features[i].c_str()),Form("MC %s reweighting studies %s",features[i].c_str(),year.c_str()),200,10,900,780));
    }
 
 //   TString weightfile = dir + prefix  + TString(".weights.xml");
@@ -288,36 +359,53 @@ int main (int argc, char** argv) {
    TFile *fMC   = new TFile(NameFileMCp1.c_str(),"READ");
    std::cout<<Form("Opening MC File :%s \n",NameFileMCp1.c_str())<<std::endl;
    TTree *TreeMC     = (TTree*)fMC->Get("ntuple");
-   for (unsigned int i=0;i<=features.size()-1;i++) { 
-     TreeMC->SetBranchAddress(features[i].c_str()     ,&VarD[i] );
-     float hMin = TreeMC->GetMinimum(features[i].c_str());
-     float hMax = TreeMC->GetMaximum(features[i].c_str());
+   for (unsigned int i=0;i<=variables.size()-1;i++) { 
+//   for (unsigned int i=0;i<=features.size()-1;i++) { 
+     TreeMC->SetBranchAddress(variables[i].c_str()     ,&VarD[i] );
+     float hMin = TreeMC->GetMinimum(variables[i].c_str());
+     float hMax = TreeMC->GetMaximum(variables[i].c_str());
      
-     if(features[i]=="kstTrk1Pt"|| features[i]=="kstTrk2Pt") hMin=0;
-     if(features[i]=="kstTrk1Pt"|| features[i]=="kstTrk2Pt") hMax=40;
-     if(features[i]=="kstTrk1Eta"|| features[i]=="kstTrk2Eta") hMin=-3.14159;
-     if(features[i]=="kstTrk1Eta"|| features[i]=="kstTrk2Eta") hMax= 3.14159;
-     if(features[i]=="sum_isopt_04") hMin=0;
-     if(features[i]=="sum_isopt_04") hMax=30;
-     if(features[i]=="bDCABS") hMin=-0.015;
-     if(features[i]=="bDCABS") hMax=0.015;
-     if(features[i]=="bDCABSE") hMin=0.;
-     if(features[i]=="bDCABSE") hMax=0.04;
-     if(features[i]=="bCosAlphaBS") hMin=0.998;
-     if(features[i]=="bCosAlphaBS") hMax=1.;
-     if(features[i]=="bVtxCL") hMin=0.;
-     if(features[i]=="bVtxCL") hMax=1.;
-     if(features[i]=="kstTrk1DCABS") hMin=-1.;
-     if(features[i]=="kstTrk1DCABS") hMax= 1.;
-     if(features[i]=="kstTrk2DCABS") hMin=-1.;
-     if(features[i]=="kstTrk2DCABS") hMax= 1.;
-     if(features[i]=="kstTrk1DCABSE") hMin= 0.;
-     if(features[i]=="kstTrk1DCABSE") hMax= 0.025;
-     if(features[i]=="kstTrk2DCABSE") hMin= 0.;
-     if(features[i]=="kstTrk2DCABSE") hMax= 0.025;
-     HistData.push_back(new TH1D(  Form("Hx%s_Data" ,features[i].c_str()), Form("%s Data %s"	        ,features[i].c_str(),year.c_str()),100,hMin,hMax));
-     HistMC.push_back(  new TH1D(  Form("Hx%s_MC"   ,features[i].c_str()), Form("%s MC %s" 	        ,features[i].c_str(),year.c_str()),100,hMin,hMax));
-     HistMCW.push_back( new TH1D(  Form("Hx%s_MCW"  ,features[i].c_str()), Form("%s MC %s Reweighted",features[i].c_str(),year.c_str()),100,hMin,hMax));
+     isFeature="";
+     
+     if(variables[i]=="kstTrk1Pt") hMin=0;
+     if(variables[i]=="kstTrk1Pt") hMax=30;
+     if(variables[i]=="kstTrk2Pt") hMin=0;
+     if(variables[i]=="kstTrk2Pt") hMax=20;
+     if(variables[i]=="mu1Pt"|| variables[i]=="mu2Pt") hMin=0;
+     if(variables[i]=="mu1Pt"|| variables[i]=="mu2Pt") hMax=30;
+     if(variables[i]=="kstTrk1Eta"|| variables[i]=="kstTrk2Eta") hMin=-2.8;
+     if(variables[i]=="kstTrk1Eta"|| variables[i]=="kstTrk2Eta") hMax= 2.8;
+     if(variables[i]=="sum_isopt_04") hMin=0;
+     if(variables[i]=="sum_isopt_04") hMax=10;
+     if(variables[i]=="bLBS")  hMin=0.;
+     if(variables[i]=="bLBS")  hMax=2.;
+     if(variables[i]=="bLBSE") hMin=0.;
+     if(variables[i]=="bLBSE") hMax=0.02;
+     if(variables[i]=="bDCABS") hMin=-0.01;
+     if(variables[i]=="bDCABS") hMax=0.01;
+     if(variables[i]=="bDCABSE") hMin=0.;
+     if(variables[i]=="bDCABSE") hMax=0.004;
+     if(variables[i]=="bCosAlphaBS") hMin=0.999;
+     if(variables[i]=="bCosAlphaBS") hMax=1.;
+     if(variables[i]=="bVtxCL") hMin=0.;
+     if(variables[i]=="bVtxCL") hMax=1.;
+     if(variables[i]=="kstTrk1DCABS") hMin=-0.4;
+     if(variables[i]=="kstTrk1DCABS") hMax= 0.4;
+     if(variables[i]=="kstTrk2DCABS") hMin=-0.4;
+     if(variables[i]=="kstTrk2DCABS") hMax= 0.4;
+     if(variables[i]=="kstTrk1DCABSE") hMin= 0.;
+     if(variables[i]=="kstTrk1DCABSE") hMax= 0.02;
+     if(variables[i]=="kstTrk2DCABSE") hMin= 0.;
+     if(variables[i]=="kstTrk2DCABSE") hMax= 0.02;
+     
+     if(variables[i]==features[i]) isFeature ="(BDT feature)";
+     std::cout<<Form("Booking Histograms for %s",variables[i].c_str())<<std::endl;
+     
+//   float hMin = 0;
+//   float hMax = 35;
+     HistData.push_back(new TH1D(  Form("Hx%s_Data" ,variables[i].c_str()), Form("%s Data %s %s"	 ,variables[i].c_str(),year.c_str(),isFeature.c_str()),100,hMin,hMax));
+     HistMC.push_back(  new TH1D(  Form("Hx%s_MC"   ,variables[i].c_str()), Form("%s MC %s %s" 	         ,variables[i].c_str(),year.c_str(),isFeature.c_str()),100,hMin,hMax));
+     HistMCW.push_back( new TH1D(  Form("Hx%s_MCW"  ,variables[i].c_str()), Form("%s MC %s Reweighted %s",variables[i].c_str(),year.c_str(),isFeature.c_str()),100,hMin,hMax));
    }
 //   fMC->cd();
    TreeMC->SetBranchAddress("pass_preselection"     ,&pass_preselection );
@@ -334,14 +422,15 @@ int main (int argc, char** argv) {
    float val_mva_B=0;
    float rewe=0;
    int nentriesMC = (int)TreeMC->GetEntries(); 
+//   int shift = variables.size()-features.size();
    std::cout<<Form("Found MC entries= = %d",nentriesMC)<<std::endl;
-//   for (Int_t i=0;i<100000;i++) {
+//   for (Int_t i=0;i<1000;i++) {
    for (Int_t i=0;i<nentriesMC;i++) {
        TreeMC->GetEntry(i);
        if ( i%100000==0 ) {
           std::cout<<Form("Event %d",i)<<std::endl;
        }
-       if( int(eventN)%2==0 ) continue; // parity!!!!!!!!!!!!!!!!!!!!!!111
+       if( eventN%2==0 ) continue; // parity!!!!!!!!!!!!!!!!!!!!!!111
        if(pass_preselection!=1) continue;
        if(trig!=1) continue;
        if(truthMatchMum !=1) continue;
@@ -349,19 +438,25 @@ int main (int argc, char** argv) {
        if(truthMatchTrkm!=1) continue; 
        if(truthMatchTrkp!=1) continue;
        if(fabs(mumuMass - JPsiMass) < nSigma_psiRej*mumuMassE){
-        for (unsigned int i=0;i<=features.size()-1;i++) { 
- 	 if(TMath::IsNaN(VarD[i])) continue;
-         VarF[i]=float(VarD[i]);
-        }
- 
+        bool skip = false;
+ 	for (unsigned int j=0;j<=features.size()-1;j++) {
+//	   if(fabs(float(VarD[j]))<TMath::Exp(-60)) std::cout<<Form("warning in MC  %s=%f<10^-60",features[j].c_str(),VarD[j])<<std::endl;
+ 	 if(TMath::IsNaN(VarD[j])) {
+//	  std::cout<<Form("warning in MC  %s is NaN",features[j].c_str())<<std::endl;
+ 	  skip = true;
+ 	  break;
+ 	 }
+ 	 VarF[j]=float(VarD[j]);
+ 	}
+	if(skip) continue;
  	val_mva_S = reader->EvaluateMulticlass( "BDT"	 )[0];
  	val_mva_B = reader->EvaluateMulticlass( "BDT"	 )[1];
  	rewe=val_mva_S/val_mva_B;
  	HxBDTMC ->Fill(val_mva_S);
  	HxBDTMCW->Fill(val_mva_S,rewe);
- 	for (unsigned int i=0;i<=features.size()-1;i++) {
- 	 HistMC[i] ->Fill(VarD[i],weight);
- 	 HistMCW[i]->Fill(VarD[i],rewe*weight);
+ 	for (unsigned int j=0;j<=variables.size()-1;j++) {
+	 HistMC[j] ->Fill(VarD[j],weight);
+	 HistMCW[j]->Fill(VarD[j],rewe*weight);
  	}
       } 
     }  
@@ -370,8 +465,8 @@ int main (int argc, char** argv) {
     std::cout<<Form("Opening Data File :%s \n",NameFileDatap1.c_str())<<std::endl;
 //    fData->cd();
     TTree *TreeData     = (TTree*)fData->Get("ntuple");
-    for (unsigned int i=0;i<=features.size()-1;i++) { 
-     TreeData->SetBranchAddress(features[i].c_str()     ,&VarD[i] );
+    for (unsigned int i=0;i<=variables.size()-1;i++) { 
+     TreeData->SetBranchAddress(variables[i].c_str()     ,&VarD[i] );
     }
     TreeData->SetBranchAddress("pass_preselection" ,&pass_preselection );
     TreeData->SetBranchAddress("tagged_mass"	   ,&tagged_mass );
@@ -382,26 +477,33 @@ int main (int argc, char** argv) {
     int nentriesData = (int)TreeData->GetEntries();
     std::cout<<Form("Found Data entries= = %d",nentriesData)<<std::endl;
     for (Int_t i=0;i<nentriesData;i++) {
-//    for (Int_t i=0;i<100000;i++) {
+//    for (Int_t i=0;i<1000;i++) {
     	   TreeData->GetEntry(i);
  	   if ( i%100000==0 ) {
  	      std::cout<<Form("Event %d",i)<<std::endl;
  	    }
-	   if( int(eventN)%2==0 ) continue; // parity!!!!!!!!!!!!!!!!!!!!!!111
+           if( eventN%2==0 ) continue; // parity!!!!!!!!!!!!!!!!!!!!!!111
     	   if(pass_preselection!=1) continue;
     	   if(fabs(mumuMass - JPsiMass) < nSigma_psiRej*mumuMassE){
- 	    for (unsigned int i=0;i<=features.size()-1;i++) {
- 	     if(TMath::IsNaN(VarD[i])) continue;
- 	     VarF[i]=float(VarD[i]);
+	    bool skip = false;
+ 	    for (unsigned int j=0;j<=features.size()-1;j++) {
+//             if(fabs(float(VarD[j]))<TMath::Exp(-60)) std::cout<<Form("warning in data  %s=%f<10^-60",features[j].c_str(),VarD[j])<<std::endl;
+ 	     if(TMath::IsNaN(VarD[j])) {
+//	      std::cout<<Form("warning in data  %s is NaN",features[j].c_str())<<std::endl;
+              skip = true;
+	      break;
+	     } 
+ 	     VarF[j]=float(VarD[j]);
  	    }
+	    if(skip) continue;
  	    val_mva_S = reader->EvaluateMulticlass( "BDT"    )[0];
     	    HxBDTData->Fill(val_mva_S,nsig_sw);
- 	    for (unsigned int i=0;i<=features.size()-1;i++) {
- 	     HistData[i]->Fill(VarD[i],nsig_sw);
+ 	    for (unsigned int j=0;j<=variables.size()-1;j++) {
+ 	     HistData[j]->Fill(VarD[j],nsig_sw);
  	    }
      	   }
      }
- TCanvas* c_bdt = new TCanvas("c_bdt",Form("BDT score %s",year.c_str()),200,10,900,780);
+  TCanvas* c_bdt = new TCanvas("c_bdt",Form("BDT score %s",year.c_str()),200,10,900,780);
  c_bdt->cd();
  HxBDTData->Sumw2();
  HxBDTMC->Sumw2();
@@ -417,7 +519,7 @@ int main (int argc, char** argv) {
  HxBDTMCW->SetMarkerColor(kBlue);
  HxBDTMCW->Draw("same,Hist");
  c_bdt->Print(Form("%s/tmva-bdt-score-%s.pdf",datasetYear.c_str(),year.c_str()));
- for (unsigned int i=0;i<=features.size()-1;i++) {
+ for (unsigned int i=0;i<=variables.size()-1;i++) {
    cstudies[i]->cd();
    HistData[i]->Sumw2();
    HistMC[i]->Sumw2();
@@ -438,29 +540,41 @@ int main (int argc, char** argv) {
    RatiosDataMC[i]->SetH1DrawOpt("E1");
    RatiosDataMC[i]->SetH2DrawOpt("HIST");
    RatiosDataMC[i]->Draw();
+//    RatiosDataMC[i]->GetLowerRefGraph()->SetMinimum(RatiosDataMC[i]->GetLowerRefGraph()->GetMinimum()*2.);
+//    RatiosDataMC[i]->GetLowerRefGraph()->SetMaximum(RatiosDataMC[i]->GetLowerRefGraph()->GetMaximum()*2.);
+//   TGraph *g = RatiosDataMC[i]->GetLowerRefGraph();
    RatiosDataMCW.push_back(new TRatioPlot(HistData[i],HistMCW[i],"divsym"));
    RatiosDataMCW[i]->SetGraphDrawOpt("L");
    RatiosDataMCW[i]->SetSeparationMargin(0.0);
    RatiosDataMCW[i]->SetH1DrawOpt("E1");
    RatiosDataMCW[i]->SetH2DrawOpt("HIST");
+//   RatiosDataMCW[i]->Draw("same");
+//   RatiosDataMCW[i]->GetLowerRefGraph()->
    RatiosDataMCW[i]->Draw();
    RatiosDataMCW[i]->GetLowerRefGraph()->SetLineColor(kBlue);
    RatiosDataMCW[i]->GetLowerRefGraph()->SetMarkerColor(kBlue);
    RatiosDataMCW[i]->GetUpperPad()->cd();
    HistMC[i]->SetLineColor(kRed);
    HistMC[i]->SetMarkerColor(kRed);
+//    HistMCW[i]->SetLineColor(kBlue);
+//    HistMCW[i]->SetMarkerColor(kBlue);
+//    HistData[i]->Draw("same");
    HistMC[i]->Draw("same,Hist");
    RatiosDataMCW[i]->GetLowerPad()->cd();
    RatiosDataMC[i]->GetLowerRefGraph()->SetLineColor(kRed);
    RatiosDataMC[i]->GetLowerRefGraph()->SetMarkerColor(kRed);
    RatiosDataMCW[i]->GetLowerRefGraph()->SetLineColor(kBlue);
    RatiosDataMCW[i]->GetLowerRefGraph()->SetMarkerColor(kBlue);
-   RatiosDataMC[i]->GetLowerRefGraph()->SetMinimum(0);
-   RatiosDataMC[i]->GetLowerRefGraph()->SetMaximum(2);
-   RatiosDataMCW[i]->GetLowerRefGraph()->SetMinimum(0);
-   RatiosDataMCW[i]->GetLowerRefGraph()->SetMaximum(2);
+    RatiosDataMC[i]->GetLowerRefGraph()->SetMinimum(0);
+    RatiosDataMC[i]->GetLowerRefGraph()->SetMaximum( 2);
+    RatiosDataMCW[i]->GetLowerRefGraph()->SetMinimum(0);
+    RatiosDataMCW[i]->GetLowerRefGraph()->SetMaximum( 2);
    RatiosDataMC[i]->GetLowerRefGraph()->Draw("same");
-   cstudies[i]->Print( Form("%s/tmva-studies-%s-%s.pdf",datasetYear.c_str()  ,features[i].c_str(),year.c_str()));
+//   RatiosDataMCW[i]->GetLowerPad()->cd();
+//   g->Draw();
+//   HistMCW[i]->Draw("same,Hist");
+//   cstudies[i]->Update();
+   cstudies[i]->Print( Form("%s/tmva-studies-%s-%s.pdf",datasetYear.c_str()  ,variables[i].c_str(),year.c_str()));
 
  }
 
