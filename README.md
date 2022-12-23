@@ -9,8 +9,7 @@ the same and parity selections are defined in the program.
 
 Be aware that TMVA Multithread is active and the requested #treads is 40! 
 
- 
-example: ./tmva-test-allYears 2016 bdt  ; if you want to train a new bdt & plots
+example: ./tmva-test-allYears 2016 bdt  ; if you want to train a new bdt and plots
 
          ./tmva-test-allYears 2016	; if you want just produce the  plots
 
