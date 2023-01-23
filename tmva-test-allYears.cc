@@ -80,6 +80,12 @@ int    xcut=-99;
 double dxcut=-99;
 int    passB0Psi_jpsi=-99;
 
+//
+Long64_t CutEve =500000000000000000; 
+//Long64_t CutEve =5000; 
+//
+   
+
 double kstTrk1PtD=-99;
 double kstTrk2PtD=-99;
 double kstTrk1EtaD=-99;
@@ -91,7 +97,7 @@ Double_t truthMatchTrkp=-99 ;
 Double_t trig=-99 ;
 Long64_t eventN=-99;
 int pass_preselection=-99;
-int num_threads=40;
+int num_threads=50;
 std::string isFeature="";
 std::string year=""; 
 std::string year_default="2016";
@@ -130,6 +136,8 @@ std::string OutputFileName="TMVA_ClassificationOutput.root";
                                         "kstTrk1Eta", "kstTrk2Eta","kstTrk1DCABS","kstTrk1DCABSE",\
    				     "kstTrk2DCABS", "kstTrk2DCABSE","mu1Pt","mu2Pt","mu1Eta","mu2Eta","sum_isopt_04"};
  */   
+std::vector<std::string> spectatorF = {"mumuMass","tagged_mass","xcut","trig","truthMatchMum","truthMatchMup","truthMatchTrkm","truthMatchTrkp"};
+std::vector<std::string> spectatorI = {"eventN","pass_preselection","passB0Psi_jpsi","trig","truthMatchMum","truthMatchMup","truthMatchTrkm","truthMatchTrkp"};
 std::vector<std::string> variables = {};
 std::vector<std::string> vartested = {"cos_theta_l","cos_theta_k","phi_kst_mumu"};
    
@@ -202,6 +210,11 @@ int main (int argc, char** argv) {
   gROOT->SetStyle("Plain");
 //   ROOT::EnableImplicitMT(num_threads); 
 //   TMVA::Tools::Instance();
+  std::cout<<Form("Warning, analyze only %lli events!!!!\n",CutEve)<<std::endl;
+  std::cout<<Form("Warning, analyze only %lli events!!!!\n",CutEve)<<std::endl;
+  std::cout<<Form("Warning, analyze only %lli events!!!!\n",CutEve)<<std::endl;
+  std::cout<<Form("Warning, analyze only %lli events!!!!\n",CutEve)<<std::endl;
+  std::cout<<Form("Warning, analyze only %lli events!!!!\n",CutEve)<<std::endl;
 
   TFile *fModel = new TFile(NameFileModel.c_str(),"READ");
   TTree *TreeModel     = (TTree*)fModel->Get("ntuple_DRw");
@@ -235,7 +248,12 @@ int main (int argc, char** argv) {
 //  TMVA::Factory factory("TMVAClassification", outputFile,"!V:ROC:!Silent:Color:!DrawProgressBar:AnalysisType=Classification" ); 
 //  TMVA::Factory factory =  TMVA::Factory( "TMVAClassification", outputFile,"!V:!Silent:Color:DrawProgressBar:Transformations=None:AnalysisType=multiclass" );
 //TMVA::Factory factory =  TMVA::Factory( "TMVAClassification", outputFile,"!V:!Silent:Color:DrawProgressBar:Transformations=I;P;G:AnalysisType=multiclass" );
-  TMVA::Factory factory =  TMVA::Factory( "TMVAClassification", outputFile,"!V:!Silent:Color:DrawProgressBar:Transformations=None:AnalysisType=multiclass" );
+
+//  TMVA::Factory factory =  TMVA::Factory( "TMVAClassification", outputFile,"!V:!Silent:Color:DrawProgressBar:Transformations=None:AnalysisType=Auto" );
+  TMVA::Factory factory =  TMVA::Factory( "TMVAClassification", outputFile,"!V:!Silent:Color:DrawProgressBar:Transformations=None:AnalysisType=Auto");
+//  TMVA::Factory factory =  TMVA::Factory( "TMVAClassification", outputFile,"!V:!Silent:Color:DrawProgressBar:Transformations=I;D;P;G,D:AnalysisType=Auto");
+
+//  TMVA::Factory factory =  TMVA::Factory( "TMVAClassification", outputFile,"!V:!Silent:Color:DrawProgressBar:Transformations=None:AnalysisType=multiclass" );
 //    TMVA::Factory factory =  TMVA::Factory( "TMVAClassification", outputFile,"!V:!Silent:Color:DrawProgressBar:Transformations=I;D;P;G,D:AnalysisType=multiclass" );
 //  TMVA::Factory factory =  TMVA::Factory( "TMVAMulticlass", outputFile,"!V:!Silent:Color:DrawProgressBar:Transformations=I;D;P;G,D:AnalysisType=multiclass" );
 //  TMVA::Factory factory("TMVAClassification", outputFile,"!V:ROC:!Silent:Color:!DrawProgressBar:AnalysisType=Classification" ); 
@@ -244,10 +262,11 @@ int main (int argc, char** argv) {
 //global event weights per tree (see below for setting event-wise weights)
   Double_t signalWeight     = 1.0;
   Double_t backgroundWeight = 1.0;
-   
+  
 // You can add an arbitrary number of signal or background trees
+TCut mycuteve = Form("eventN<%lld",CutEve); 
 TCut JpsiCut = "(mumuMass*mumuMass>8.68 && mumuMass*mumuMass < 10.09) && pass_preselection==1 && (tagged_mass > 5.0 && tagged_mass < 5.6) &&  xcut == 0 && passB0Psi_jpsi == 1"; 
-TCut mycuts0  = JpsiCut&&"int(eventN)%2==0"; // for example: TCut mycuts = "abs(var1)<0.5 && abs(var2-0.5)<1";
+TCut mycuts0  = mycuteve&&JpsiCut&&"int(eventN)%2==0"; // for example: TCut mycuts = "abs(var1)<0.5 && abs(var2-0.5)<1";
 //preselection  TCut mycuts0  = "xcut==0&&pass_preselection==1&& fabs(mumuMass - 3.096916) < 3*(mumuMassE) && int(eventN)%2==0"; // for example: TCut mycuts = "abs(var1)<0.5 && abs(var2-0.5)<1";
 //  TCut mycuts0  = "pass_preselection==1&& fabs(mumuMass - 3.096916) < 3*(mumuMassE) && int(eventN)%2==0&&fabs(bCosAlphaBS)<=1&&(sum_isopt_04)<10"; // for example: TCut mycuts = "abs(var1)<0.5 && abs(var2-0.5)<1";
 //  TCut mycuts0  = "pass_preselection==1&& abs(mumuMass - 3.096916) < 3*mumuMassE && int(eventN)%2==0&&abs(bCosAlphaBS)<=1&&sum_isopt_04<10"; // for example: TCut mycuts = "abs(var1)<0.5 && abs(var2-0.5)<1";
@@ -255,7 +274,7 @@ TCut mycuts0  = JpsiCut&&"int(eventN)%2==0"; // for example: TCut mycuts = "abs(
 //   TCut mycutb1 = "pass_preselection==1&& abs(mumuMass - 3.096916) < 3*mumuMassE && (trig==1)";
 //   TCut mycutb2 = "(truthMatchMum==1)&&(truthMatchMup==1) && truthMatchTrkm==1 && truthMatchTrkp==1"; // for example: TCut mycutb = "abs(var1)<0.5";
 //   TCut mycutb=mycutb1&&mycutb2;
-  TCut mycutb0=JpsiCut&&"int(eventN%2)==0 &&(trig==1) && (truthMatchMum==1) && (truthMatchMup==1) && (truthMatchTrkm==1) && (truthMatchTrkp==1)";
+  TCut mycutb0= mycuteve&&JpsiCut&&"int(eventN%2)==0&&(trig==1) && (truthMatchMum==1) && (truthMatchMup==1) && (truthMatchTrkm==1) && (truthMatchTrkp==1)";
 //preselection  TCut mycutb0="xcut==0&&pass_preselection==1&& fabs(mumuMass - 3.096916) < 3*(mumuMassE) && int(eventN%2)==0 &&(trig==1) && (truthMatchMum==1) && (truthMatchMup==1) && (truthMatchTrkm==1) && (truthMatchTrkp==1)";
 //  TCut mycutb="pass_preselection==1&& abs(mumuMass - 3.096916) < 3*mumuMassE && (trig==1)&&(truthMatchMum==1)&&(truthMatchMup==1) && truthMatchTrkm==1 && truthMatchTrkp==1&&!TMath::IsNaN(bDCABSE)&&!TMath::IsNaN(bLBSE)";
 // loader->AddSignalTree    ( TreeData,     signalWeight );
@@ -287,6 +306,12 @@ TCut mycuts0  = JpsiCut&&"int(eventN)%2==0"; // for example: TCut mycuts = "abs(
   for (unsigned int i=0;i<=features.size()-1;i++) {
    loader->AddVariable( features[i].c_str(), 'F' );
   }
+//   for (unsigned int i=0;i<=spectatorF.size()-1;i++) {
+//    loader->AddSpectator( spectatorF[i].c_str(), 'F' );
+//   }
+//   for (unsigned int i=0;i<=spectatorI.size()-1;i++) {
+//    loader->AddSpectator( spectatorI[i].c_str(), 'I' );
+//  }
 //   
 //   loader->AddVariable( "kstTrk1Pt", 'D' );
 //   loader->AddVariable( "kstTrk2Pt", 'D' );
@@ -321,10 +346,11 @@ TCut mycuts0  = JpsiCut&&"int(eventN)%2==0"; // for example: TCut mycuts = "abs(
 //   loader->PrepareTrainingAndTestTree( mycuts, mycutb,
 //                                  "nTrain_Signal=5000:nTrain_Background=5000:SplitMode=Random:NormMode=NumEvents:!V" );
 //                                    "nTrain_Signal=500000:nTrain_Background=500000:SplitMode=Random:NormMode=NumEvents:!V" );
-                                      "SplitMode=Random:NormMode=NumEvents:!V" );
+                                      "SplitMode=Random:NormMode=NumEvents:V" );
 //Boosted Decision Trees
-   factory.BookMethod( loader,  TMVA::Types::kBDT, "BDT", "!H:!V:NTrees=1000:BoostType=Grad:Shrinkage=0.10:UseBaggedBoost:BaggedSampleFraction=0.50:nCuts=20:MaxDepth=2:DoBoostMonitor=kTRUE");
-//   factory.BookMethod( loader,  TMVA::Types::kBDT, "BDT", "!H:!V:NTrees=1000:BoostType=Grad:Shrinkage=0.10:UseBaggedBoost:BaggedSampleFraction=0.50:nCuts=20:MaxDepth=2:DoBoostMonitor=kTRUE");
+   factory.BookMethod( loader,  TMVA::Types::kBDT, "BDT", "H:V:NTrees=2000:BoostType=Grad:Shrinkage=0.10:UseBaggedBoost:BaggedSampleFraction=0.50:nCuts=20:MaxDepth=2:DoBoostMonitor:CreateMVAPdfs:PDFInterpolMVAPdf=Spline2:NbinsMVAPdf=50:NsmoothMVAPdf=10");
+//  factory.BookMethod( loader,  TMVA::Types::kBDT, "BDT", "H:V:NTrees=1000:BoostType=Grad:Shrinkage=0.10:UseBaggedBoost:BaggedSampleFraction=0.50:nCuts=20:MaxDepth=2:DoBoostMonitor");
+//   factory.BookMethod( loader,  TMVA::Types::kBDT, "BDT", "!H:!V:NTrees=1000:BoostType=Grad:Shrinkage=0.10:UseBaggedBoost:BaggedSampleFraction=0.50:nCuts=20:MaxDepth=2:DoBoostMonitor");
 //   factory.BookMethod( loader,  TMVA::Types::kBDT, "BDT", "!H:!V:NTrees=1000:BoostType=Grad:Shrinkage=0.10:UseBaggedBoost:BaggedSampleFraction=0.50:nCuts=20:MaxDepth=2");
 
 //   factory.BookMethod(loader,TMVA::Types::kBDT,"BDT","!V:NTrees=200:MinNodeSize=2.5%:MaxDepth=2:BoostType=AdaBoost:AdaBoostBeta=0.5:UseBaggedBoost:BaggedSampleFraction=0.5:SeparationType=GiniIndex:nCuts=20:CreateMVAPdfs" );
@@ -415,6 +441,7 @@ TCut mycuts0  = JpsiCut&&"int(eventN)%2==0"; // for example: TCut mycuts = "abs(
    TFile *fMC   = new TFile(NameFileMCp1.c_str(),"READ");
    std::cout<<Form("Opening MC File :%s \n",NameFileMCp1.c_str())<<std::endl;
    TTree *TreeMC     = (TTree*)fMC->Get("ntuple");
+
    for (unsigned int i=0;i<=variables.size()-1;i++) { 
 //   for (unsigned int i=0;i<=features.size()-1;i++) { 
      TreeMC->SetBranchAddress(variables[i].c_str()     ,&VarD[i] );
@@ -482,14 +509,17 @@ TCut mycuts0  = JpsiCut&&"int(eventN)%2==0"; // for example: TCut mycuts = "abs(
 // add friend
    float val_mva_S=0;
    float val_mva_B=0;
-   int nentriesMC = (int)TreeMC->GetEntries(); 
 //   int shift = variables.size()-features.size();
-   std::cout<<Form("Found MC entries= = %d",nentriesMC)<<std::endl;
-// for (Int_t i=0;i<1000;i++) {
-     for (Int_t i=0;i<nentriesMC;i++) {
+   Long64_t nentriesMC = (Long64_t)TreeMC->GetEntries(); 
+   std::cout<<Form("Found MC entries= = %lld",nentriesMC)<<std::endl;
+   Long64_t MaxEveMC = (Long64_t)std::min(CutEve,(Long64_t)nentriesMC);
+   std::cout<<Form("Reading num. MC entries= = %lld",MaxEveMC)<<std::endl;
+// for (int i=0;i<10000;i++) {
+ for (Long64_t i=0;i<MaxEveMC;i++) {
+//     for (Int_t i=0;i<nentriesMC;i++) {
        TreeMC->GetEntry(i);
        if ( i%100000==0 ) {
-          std::cout<<Form("Event %d",i)<<std::endl;
+          std::cout<<Form("Event %lld",i)<<std::endl;
        }
        if( !save ){
         if(eventN%2==0 ) continue; // parity!!!!!!!!!!!!!!!!!!!!!!111
@@ -517,9 +547,16 @@ TCut mycuts0  = JpsiCut&&"int(eventN)%2==0"; // for example: TCut mycuts = "abs(
  	 VarF[j]=float(VarD[j]);
  	}
 	if(!skip){
- 	 val_mva_S = reader->EvaluateMulticlass( "BDT"	 )[0];
- 	 val_mva_B = reader->EvaluateMulticlass( "BDT"	 )[1];
- 	 rewe=double(val_mva_S/val_mva_B);
+// 	 val_mva_S = (reader->EvaluateMVA( "BDT"    )+1.)/2.;
+	 val_mva_S = reader->GetProba( "BDT"    );
+/// 	 val_mva_S = reader->EvaluateMulticlass( "BDT"	 )[0];
+ 	 val_mva_B = 1.-val_mva_S;
+// 	 val_mva_B = reader->EvaluateMulticlass( "BDT"	 )[1];
+ 	 if(val_mva_B!=0) {
+	  rewe=double(val_mva_S/val_mva_B);
+	 }else{
+	  rewe=0;
+	 } 
  	 HxBDTMC ->Fill(val_mva_S);
  	 HxBDTMCW->Fill(val_mva_S,rewe);
  	 for (unsigned int j=0;j<=variables.size()-1;j++) {
@@ -531,7 +568,7 @@ TCut mycuts0  = JpsiCut&&"int(eventN)%2==0"; // for example: TCut mycuts = "abs(
 	} 
         if(save) tout->Fill();
     }  
-//=============== Data TTree ================== 
+// //=============== Data TTree ================== 
     TFile *fData   = new TFile(NameFileDatap1.c_str(),"READ");
     std::cout<<Form("Opening Data File :%s \n",NameFileDatap1.c_str())<<std::endl;
 //    fData->cd();
@@ -547,13 +584,17 @@ TCut mycuts0  = JpsiCut&&"int(eventN)%2==0"; // for example: TCut mycuts = "abs(
     TreeData->SetBranchAddress("eventN"	           ,&eventN );
     TreeData->SetBranchAddress("xcut"	           ,&xcut );
     TreeData->SetBranchAddress("passB0Psi_jpsi"	   ,&passB0Psi_jpsi );
-    int nentriesData = (int)TreeData->GetEntries();
-    std::cout<<Form("Found Data entries= = %d",nentriesData)<<std::endl;
-    for (Int_t i=0;i<nentriesData;i++) {
+    Long64_t nentriesData = (Long64_t)TreeData->GetEntries();
+    std::cout<<Form("Found Data entries= = %d",(int)nentriesData)<<std::endl;
+    Long64_t MaxEveData = (Long64_t)std::min(CutEve,nentriesData);
+    std::cout<<Form("Reading num. Data entries= = %lld",MaxEveData)<<std::endl;
+//    for (Long64_t i=0;i<nentriesData;i++) {
+    for (Long64_t i=0;i<MaxEveData;i++) {
+//    for (Int_t i=0;i<nentriesData;i++) {
 //    for (Int_t i=0;i<1000;i++) {
     	   TreeData->GetEntry(i);
  	   if ( i%100000==0 ) {
- 	      std::cout<<Form("Event %d",i)<<std::endl;
+ 	      std::cout<<Form("Event %lld",i)<<std::endl;
  	    }
             if(!save){
              if(passB0Psi_jpsi!=1) continue;
@@ -575,7 +616,9 @@ TCut mycuts0  = JpsiCut&&"int(eventN)%2==0"; // for example: TCut mycuts = "abs(
  	     VarF[j]=float(VarD[j]);
  	    }
 	    if(!skip){
- 	     val_mva_S = reader->EvaluateMulticlass( "BDT"    )[0];
+ 	     val_mva_S = reader->GetProba( "BDT"    );
+// 	     val_mva_S = (reader->EvaluateMVA( "BDT"    )+1)/2;
+// 	     val_mva_S = reader->EvaluateMulticlass( "BDT"    )[0];
     	     HxBDTData->Fill(val_mva_S,nsig_sw);
  	     for (unsigned int j=0;j<=variables.size()-1;j++) {
  	      HistData[j]->Fill(VarD[j],nsig_sw);
@@ -690,7 +733,9 @@ TCut mycuts0  = JpsiCut&&"int(eventN)%2==0"; // for example: TCut mycuts = "abs(
      fout->Close();
     }else{
      pout->cd();
-     for (unsigned int i=features.size();i<=variables.size()-1;i++) {
+     for (unsigned int i=0;i<=variables.size()-1;i++) {
+//     for (unsigned int i=features.size();i<=variables.size()-1;i++) {
+       HistMC[i]->Write();
        HistMCW[i]->Write();
      }  
      pout->Close();
