@@ -156,9 +156,8 @@ int main (int argc, char** argv) {
   if( argc<=1 ){
     std::cout<<Form("Usage: %s [year=2016,2017,2018] {bdt}",argv[0])<<std::endl;
     std::cout<<Form("Please, set the year (at least)")<<std::endl;
-    std::cout<<Form("example: %s 2016 bdt  ; if you want to train a new bdt & plots\n",argv[0])<<std::endl;
-    std::cout<<Form("         %s 2016      ; if you want just produce the  plots\n",argv[0])<<std::endl;
-    std::cout<<Form("         %s 2016 save ; if you want save the MC weights in a root file\n",argv[0])<<std::endl;
+    std::cout<<Form("example: %s 2016 bdt; if you want to train a new bdt & plots\n",argv[0])<<std::endl;
+    std::cout<<Form("         %s 2016	 ; if you want just produce the  plots\n",argv[0])<<std::endl;
     exit(0);
   }else{
    if ((strcmp(argv[1],"2016") == 0 || \
