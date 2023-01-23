@@ -134,9 +134,10 @@ std::vector<std::string> variables = {};
 std::vector<std::string> vartested = {"cos_theta_l","cos_theta_k","phi_kst_mumu"};
    
 
-std::vector<std::string> features = {"kstTrk1Pt", "kstTrk2Pt",\
-                                           "kstTrk1Eta", "kstTrk2Eta",\
-   				           "mu1Pt","mu2Pt","mu1Eta","mu2Eta"};
+std::vector<std::string> features = {"kstTrk1Pt" , "kstTrk2Pt" ,\
+                                     "kstTrk1Eta", "kstTrk2Eta",\
+   				     "mu1Pt","mu2Pt","mu1Eta","mu2Eta",
+				     "bCosAlphaBS","kstTrk1DCABS","kstTrk2DCABS","sum_isopt_04"};
 /* std::vector<std::string> features = {"bVtxCL","bLBS",  "bCosAlphaBS", "bDCABS","kstTrk1Pt", "kstTrk2Pt",\
                                         "kstTrk1Eta", "kstTrk2Eta","kstTrk1DCABS","kstTrk1DCABSE",\
    				     "kstTrk2DCABS", "kstTrk2DCABSE","mu1Pt","mu2Pt","mu1Eta","mu2Eta","sum_isopt_04"};
@@ -322,7 +323,8 @@ TCut mycuts0  = JpsiCut&&"int(eventN)%2==0"; // for example: TCut mycuts = "abs(
 //                                    "nTrain_Signal=500000:nTrain_Background=500000:SplitMode=Random:NormMode=NumEvents:!V" );
                                       "SplitMode=Random:NormMode=NumEvents:!V" );
 //Boosted Decision Trees
-   factory.BookMethod( loader,  TMVA::Types::kBDT, "BDT", "!H:!V:NTrees=1000:BoostType=Grad:Shrinkage=0.10:UseBaggedBoost:BaggedSampleFraction=0.50:nCuts=20:MaxDepth=2");
+   factory.BookMethod( loader,  TMVA::Types::kBDT, "BDT", "!H:!V:NTrees=1000:BoostType=Grad:Shrinkage=0.10:UseBaggedBoost:BaggedSampleFraction=0.50:nCuts=20:MaxDepth=2:DoBoostMonitor=kTRUE");
+//   factory.BookMethod( loader,  TMVA::Types::kBDT, "BDT", "!H:!V:NTrees=1000:BoostType=Grad:Shrinkage=0.10:UseBaggedBoost:BaggedSampleFraction=0.50:nCuts=20:MaxDepth=2:DoBoostMonitor=kTRUE");
 //   factory.BookMethod( loader,  TMVA::Types::kBDT, "BDT", "!H:!V:NTrees=1000:BoostType=Grad:Shrinkage=0.10:UseBaggedBoost:BaggedSampleFraction=0.50:nCuts=20:MaxDepth=2");
 
 //   factory.BookMethod(loader,TMVA::Types::kBDT,"BDT","!V:NTrees=200:MinNodeSize=2.5%:MaxDepth=2:BoostType=AdaBoost:AdaBoostBeta=0.5:UseBaggedBoost:BaggedSampleFraction=0.5:SeparationType=GiniIndex:nCuts=20:CreateMVAPdfs" );
@@ -346,6 +348,7 @@ TCut mycuts0  = JpsiCut&&"int(eventN)%2==0"; // for example: TCut mycuts = "abs(
 //   
  void tmva_evaluate_bdt(bool save){
    TFile *fout = 0;
+   TFile *pout = 0;
    TTree *tout = 0;
    if(save) {
     std::cout<<"Save the weights!!!"<<std::endl;
@@ -356,6 +359,7 @@ TCut mycuts0  = JpsiCut&&"int(eventN)%2==0"; // for example: TCut mycuts = "abs(
     tout->Branch("MCw", &rewe,"MCw/D");
    }else{
     std::cout<<"Plots with the opposite parity!!!"<<std::endl;
+    pout = new TFile(Form("%sMC_JPSI-Plots.root",year.c_str()),"RECREATE");
    }
  
    gROOT ->Reset();
@@ -684,6 +688,12 @@ TCut mycuts0  = JpsiCut&&"int(eventN)%2==0"; // for example: TCut mycuts = "abs(
      fout->cd();
      tout->Write();
      fout->Close();
+    }else{
+     pout->cd();
+     for (unsigned int i=features.size();i<=variables.size()-1;i++) {
+       HistMCW[i]->Write();
+     }  
+     pout->Close();
     } 
 
 }
